@@ -7,10 +7,10 @@ class Board {
 	int[][] cells = new int[3][3];
 
 	public boolean isGameOver() {
-		return (hasXWon() || hasOWon() || getAvailableStates().isEmpty());
+		return (hasUserWon() || hasAIWon() || getAvailableStates().isEmpty());
 	}
 
-	public boolean hasXWon() {
+	public boolean hasUserWon() {
 		if ((cells[0][0] == cells[1][1] && cells[0][0] == cells[2][2] && cells[0][0] == 1)
 				|| (cells[0][2] == cells[1][1] && cells[0][2] == cells[2][0] && cells[0][2] == 1)) {
 			// System.out.println("X Diagonal Win");
@@ -26,7 +26,7 @@ class Board {
 		return false;
 	}
 
-	public boolean hasOWon() {
+	public boolean hasAIWon() {
 		if ((cells[0][0] == cells[1][1] && cells[0][0] == cells[2][2] && cells[0][0] == 2)
 				|| (cells[0][2] == cells[1][1] && cells[0][2] == cells[2][0] && cells[0][2] == 2)) {
 			// System.out.println("O Diagonal Win");
@@ -60,16 +60,15 @@ class Board {
 	}
 
 	public void placeAMove(Cell cell, int player) {
-		if(player == 1) {
-//			System.out.println("DO MOVE AS COMPUTER: " + cell.row + cell.col);
+		if (player == 1) {
+			// System.out.println("DO MOVE AS A: " + cell.row + cell.col);
 		} else {
-//			System.out.println("DO MOVE AS PLAYER: " + cell.row + cell.col);
+			// System.out.println("DO MOVE AS PLAYER: " + cell.row + cell.col);
 		}
 		cells[cell.row][cell.col] = player; // player = 1 for X, 2 for O
 	}
 
 	public boolean takeHumanInput(String move) {
-		System.out.println("Your move: ");
 		if (move.length() == 2) {
 			int row = move.codePointAt(0) - 48;
 			int col = move.codePointAt(1) - 48;
@@ -118,5 +117,29 @@ class Board {
 		line = " " + "20" + " | " + "21" + " | " + "22";
 		System.out.println(line);
 	}
+
+	// private String printPosition(int i) {
+	// if (i == 1) {
+	// return "00";
+	// } else if (i == 2) {
+	// return "01";
+	// } else if (i == 3) {
+	// return "02";
+	// } else if (i == 4) {
+	// return "10";
+	// } else if (i == 5) {
+	// return "11";
+	// } else if (i == 6) {
+	// return "12";
+	// } else if (i == 7) {
+	// return "20";
+	// } else if (i == 8) {
+	// return "21";
+	// } else if (i == 9) {
+	// return "22";
+	// } else {
+	// return "Null";
+	// }
+	// }
 
 }

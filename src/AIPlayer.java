@@ -4,35 +4,30 @@ import java.util.HashMap;
 public class AIPlayer {
 
 	private Board board;
-	private Cell AIMove;
-	HashMap<Integer, Cell> rootsChildrenScores;
+	private HashMap<Integer, Cell> cellAndScores;
 
 	public AIPlayer(Board board) {
-		rootsChildrenScores = new HashMap<Integer, Cell>();
+		cellAndScores = new HashMap<Integer, Cell>();
 		this.board = board;
 	}
 
-	public void placeAMove(Cell cell, int player) {
+	public void doMove(Cell cell, int player) {
 		board.placeAMove(cell, player);
-	}
-
-	public Cell getAIMoveCell() {
-		return AIMove;
 	}
 
 	public Cell returnBestMove() {
 		int maxScore = Integer.MIN_VALUE;
 		Cell cell = null;
-		for (int score : rootsChildrenScores.keySet()) {
+		for (int score : cellAndScores.keySet()) {
 			if (score > maxScore) {
 				maxScore = score;
-				cell = rootsChildrenScores.get(score);
+				cell = cellAndScores.get(score);
 			}
 		}
 		return cell;
 	}
 
-	public int getMin(ArrayList<Integer> list) {
+	private int getMin(ArrayList<Integer> list) {
 		int minScores = Integer.MAX_VALUE;
 		int index = -1;
 		for (int i = 0; i < list.size(); ++i) {
@@ -44,7 +39,7 @@ public class AIPlayer {
 		return list.get(index);
 	}
 
-	public int getMax(ArrayList<Integer> list) {
+	private int getMax(ArrayList<Integer> list) {
 		int maxScore = Integer.MIN_VALUE;
 		int index = -1;
 		for (int i = 0; i < list.size(); ++i) {
@@ -57,9 +52,9 @@ public class AIPlayer {
 	}
 
 	public int minimax(int depth, int turn) {
-		if (board.hasXWon())
+		if (board.hasUserWon())
 			return +10;
-		if (board.hasOWon())
+		if (board.hasAIWon())
 			return -10;
 
 		ArrayList<Cell> cellsAvailable = board.getAvailableStates();
@@ -70,43 +65,17 @@ public class AIPlayer {
 
 		for (Cell cell : cellsAvailable) {
 			if (turn == 1) { // OPPONENT - select highest score from MINIMAX()
-				placeAMove(cell, 1);
+				doMove(cell, 1); // Test a move
 				int currentScore = minimax(depth + 1, 2);
-				scores.add(currentScore);
+				scores.add(currentScore); 
 				if (depth == 0)
-					rootsChildrenScores.put(currentScore, cell);
-			} else if (turn == 2) { // COMPUTER - select lowest score from MINIMAX()
-				placeAMove(cell, 2);
+					cellAndScores.put(currentScore, cell);
+			} else if (turn == 2) { // AI - select lowest score from MINIMAX()
+				doMove(cell, 2);
 				scores.add(minimax(depth + 1, 1));
 			}
 			board.cells[cell.row][cell.col] = 0; // Reset this point
-
 		}
 		return turn == 1 ? getMax(scores) : getMin(scores); 
 	}
-
-	// private String printPosition(int i) {
-	// if (i == 1) {
-	// return "00";
-	// } else if (i == 2) {
-	// return "01";
-	// } else if (i == 3) {
-	// return "02";
-	// } else if (i == 4) {
-	// return "10";
-	// } else if (i == 5) {
-	// return "11";
-	// } else if (i == 6) {
-	// return "12";
-	// } else if (i == 7) {
-	// return "20";
-	// } else if (i == 8) {
-	// return "21";
-	// } else if (i == 9) {
-	// return "22";
-	// } else {
-	// return "Null";
-	// }
-	// }
-
 }

@@ -11,9 +11,10 @@ public class Game {
 
 		b.printBoardCommands();
 
-		System.out.println("\n Select turn:\n \n 1. Computer \n 2. User ");
+		System.out.println("\n Select who should start:\n \n 1. AI \n 2. User ");
 		int choice = scan.nextInt();
 		if (choice == 1) {
+			System.out.println("\n AI doing her move...\n");
 			Cell c = new Cell(1, 1);
 			b.placeAMove(c, 1);
 			b.printBoard();
@@ -32,16 +33,17 @@ public class Game {
 				break;
 
 			// AI PLAYER
-
-			AI.minimax(0, 1); // depth, turn in MINIMAX tree
-			AI.placeAMove(AI.returnBestMove(), 1);
+			
+			System.out.println("\n AI doing her move...\n");
+			AI.minimax(0, 1); // 0 depth and 1 turn
+			AI.doMove(AI.returnBestMove(), 1);
 			b.printBoard();
 		}
 
-		if (b.hasXWon())
+		if (b.hasUserWon())
 			System.out.println("\n AI WON!");
-		else if (b.hasOWon())
-			System.out.println("\n YOY WON!!"); // Can't happen
+		else if (b.hasAIWon())
+			System.out.println("\n USER WON!!"); // Impossible
 		else
 			System.out.println("IT'S A DRAW!!");
 	}
