@@ -12,7 +12,7 @@ public class AIPlayer {
 	}
 
 	public void doMove(Cell cell, int player) {
-		board.placeAMove(cell, player);
+		board.doMove(cell, player);
 	}
 
 	public Cell returnBestMove() {
@@ -74,7 +74,7 @@ public class AIPlayer {
 				doMove(cell, 2);
 				scores.add(minimax(depth + 1, 1));
 			}
-			board.cells[cell.row][cell.col] = 0; // Reset this point
+			board.getCells()[cell.getRow()][cell.getCol()] = 0; // Reset this point
 		}
 		return turn == 1 ? getMax(scores) : getMin(scores); 
 	}

@@ -1,8 +1,8 @@
 
 public class Cell {
 	
-	int row;
-	int col;
+	private int row;
+	private int col;
 
 	public Cell(int row, int col) {
 		this.row = row;
@@ -14,4 +14,11 @@ public class Cell {
 		return "[" + row + ", " + col + "]";
 	}
 	
+	public int getRow() {
+		return row;
+	}
+	
+	public int getCol() {
+		return col;
+	}
 }

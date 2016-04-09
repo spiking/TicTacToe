@@ -15,8 +15,8 @@ public class Game {
 		int choice = scan.nextInt();
 		if (choice == 1) {
 			System.out.println("\n AI doing her move...\n");
-			Cell c = new Cell(1, 1);
-			b.placeAMove(c, 1);
+			Cell cell = new Cell(1, 1);
+			b.doMove(cell, 1);
 			b.printBoard();
 		}
 
@@ -47,5 +47,4 @@ public class Game {
 		else
 			System.out.println("IT'S A DRAW!!");
 	}
-
 }

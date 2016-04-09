@@ -1,47 +1,19 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Board {
+public class Board {
 
-	ArrayList<Cell> availableCells;
-	int[][] cells = new int[3][3];
-
-	public boolean isGameOver() {
-		return (hasUserWon() || hasAIWon() || getAvailableStates().isEmpty());
+	private ArrayList<Cell> availableCells;
+	private int[][] cells;
+	
+	public Board() {
+		cells = new int[3][3];
+	}
+	
+	public int[][] getCells() {
+		return cells;
 	}
 
-	public boolean hasUserWon() {
-		if ((cells[0][0] == cells[1][1] && cells[0][0] == cells[2][2] && cells[0][0] == 1)
-				|| (cells[0][2] == cells[1][1] && cells[0][2] == cells[2][0] && cells[0][2] == 1)) {
-			// System.out.println("X Diagonal Win");
-			return true;
-		}
-		for (int i = 0; i < 3; ++i) {
-			if (((cells[i][0] == cells[i][1] && cells[i][0] == cells[i][2] && cells[i][0] == 1)
-					|| (cells[0][i] == cells[1][i] && cells[0][i] == cells[2][i] && cells[0][i] == 1))) {
-				// System.out.println("X Row or Column win");
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean hasAIWon() {
-		if ((cells[0][0] == cells[1][1] && cells[0][0] == cells[2][2] && cells[0][0] == 2)
-				|| (cells[0][2] == cells[1][1] && cells[0][2] == cells[2][0] && cells[0][2] == 2)) {
-			// System.out.println("O Diagonal Win");
-			return true;
-		}
-		for (int i = 0; i < 3; ++i) {
-			if ((cells[i][0] == cells[i][1] && cells[i][0] == cells[i][2] && cells[i][0] == 2)
-					|| (cells[0][i] == cells[1][i] && cells[0][i] == cells[2][i] && cells[0][i] == 2)) {
-				// System.out.println("O Row or Column win");
-				return true;
-			}
-		}
-
-		return false;
-	}
 
 	public ArrayList<Cell> getAvailableStates() {
 		availableCells = new ArrayList<>();
@@ -59,13 +31,13 @@ class Board {
 		return cells[row][col] == 0 ? true : false;
 	}
 
-	public void placeAMove(Cell cell, int player) {
+	public void doMove(Cell cell, int player) {
 		if (player == 1) {
 			// System.out.println("DO MOVE AS A: " + cell.row + cell.col);
 		} else {
 			// System.out.println("DO MOVE AS PLAYER: " + cell.row + cell.col);
 		}
-		cells[cell.row][cell.col] = player; // player = 1 for X, 2 for O
+		cells[cell.getRow()][cell.getCol()] = player; // player = 1 for X, 2 for O
 	}
 
 	public boolean takeHumanInput(String move) {
@@ -74,7 +46,7 @@ class Board {
 			int col = move.codePointAt(1) - 48;
 			if (row >= 0 && row <= 2 && col >= 0 && col <= 2 && isCellFree(row, col)) {
 				Cell cell = new Cell(row, col);
-				placeAMove(cell, 2);
+				doMove(cell, 2);
 				return true;
 			}
 		}
@@ -91,6 +63,7 @@ class Board {
 			return " ";
 		}
 	}
+	
 
 	public void printBoard() {
 		String line = "";
@@ -141,5 +114,42 @@ class Board {
 	// return "Null";
 	// }
 	// }
+	
+	public boolean isGameOver() {
+		return (hasUserWon() || hasAIWon() || getAvailableStates().isEmpty());
+	}
+
+	public boolean hasUserWon() {
+		if ((cells[0][0] == cells[1][1] && cells[0][0] == cells[2][2] && cells[0][0] == 1)
+				|| (cells[0][2] == cells[1][1] && cells[0][2] == cells[2][0] && cells[0][2] == 1)) {
+			// System.out.println("X Diagonal Win");
+			return true;
+		}
+		for (int i = 0; i < 3; ++i) {
+			if (((cells[i][0] == cells[i][1] && cells[i][0] == cells[i][2] && cells[i][0] == 1)
+					|| (cells[0][i] == cells[1][i] && cells[0][i] == cells[2][i] && cells[0][i] == 1))) {
+				// System.out.println("X Row or Column win");
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean hasAIWon() {
+		if ((cells[0][0] == cells[1][1] && cells[0][0] == cells[2][2] && cells[0][0] == 2)
+				|| (cells[0][2] == cells[1][1] && cells[0][2] == cells[2][0] && cells[0][2] == 2)) {
+			// System.out.println("O Diagonal Win");
+			return true;
+		}
+		for (int i = 0; i < 3; ++i) {
+			if ((cells[i][0] == cells[i][1] && cells[i][0] == cells[i][2] && cells[i][0] == 2)
+					|| (cells[0][i] == cells[1][i] && cells[0][i] == cells[2][i] && cells[0][i] == 2)) {
+				// System.out.println("O Row or Column win");
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 }
