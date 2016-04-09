@@ -17,11 +17,11 @@ public class Game {
 			Cell c = new Cell(1, 1);
 			b.placeAMove(c, 1);
 			b.printBoard();
-		} 
+		}
 
 		while (!b.isGameOver()) {
 			boolean validMove = false;
-			while(!validMove) {
+			while (!validMove) {
 				System.out.println("\n Your move: ");
 				String move = scan.next();
 				validMove = b.takeHumanInput(move);
@@ -32,12 +32,12 @@ public class Game {
 				break;
 
 			// AI PLAYER
-			
-			AI.minimax(0, 1); // depth, turn in MINIMAX tree 
+
+			AI.minimax(0, 1); // depth, turn in MINIMAX tree
 			AI.placeAMove(AI.returnBestMove(), 1);
 			b.printBoard();
 		}
-		
+
 		if (b.hasXWon())
 			System.out.println("\n AI WON!");
 		else if (b.hasOWon())
