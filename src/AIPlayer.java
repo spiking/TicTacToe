@@ -64,18 +64,19 @@ public class AIPlayer {
 			return 0;
 
 		for (Cell cell : cellsAvailable) {
-			if (turn == 1) { // OPPONENT - select highest score from MINIMAX()
+			if (turn == 1) { // AI - select lowest score from MINIMAX()
 				doMove(cell, 1); // Test a move
 				int currentScore = minimax(depth + 1, 2);
-				scores.add(currentScore); 
+				scores.add(currentScore);
 				if (depth == 0)
 					cellAndScores.put(currentScore, cell);
-			} else if (turn == 2) { // AI - select lowest score from MINIMAX()
+			} else if (turn == 2) { // OPPONENT - select highest score from MINIMAX()
 				doMove(cell, 2);
 				scores.add(minimax(depth + 1, 1));
 			}
-			board.getCells()[cell.getRow()][cell.getCol()] = 0; // Reset this point
+			board.getCells()[cell.getRow()][cell.getCol()] = 0; // Reset this
+																// point
 		}
-		return turn == 1 ? getMax(scores) : getMin(scores); 
+		return turn == 1 ? getMax(scores) : getMin(scores);
 	}
 }

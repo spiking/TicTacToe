@@ -33,7 +33,7 @@ public class Board {
 
 	public void doMove(Cell cell, int player) {
 		if (player == 1) {
-			// System.out.println("DO MOVE AS A: " + cell.row + cell.col);
+			// System.out.println("DO MOVE AS AI: " + cell.row + cell.col);
 		} else {
 			// System.out.println("DO MOVE AS PLAYER: " + cell.row + cell.col);
 		}
